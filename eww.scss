@@ -1,0 +1,140 @@
+$radius: 7px;
+$gap: 7px;
+
+$background: #1e1e2e;
+$bgdarker: #11111b;
+$foreground: #cdd6f4;
+
+$mauve: #cba6f7;
+$red: #f38ba8;
+$peach: #fab387;
+$green: #a6e3a1;
+$sapphire: #74c7ec;
+
+* {
+    all: unset;
+    font-family: "Iosevka";
+    font-family: "Iosevka Eris";
+    font-size: 12.9px;
+}  
+
+window {
+    color: $foreground;
+}
+
+tooltip {
+    font-size: 2em;
+    background-color: #7BB0DF;
+    color: #24292E;
+}
+
+.section {
+    padding: 3px 10px 3px 10px;
+    /*temp*/
+    margin: $gap 0 0 0;
+    /**/
+    background-color: $background;
+
+    border-radius: $radius;
+    border-style: solid;
+    border-width: 2;
+    border-color: $bgdarker;
+}
+
+.sidestuff-widget > * {
+    margin-left: $gap;
+}
+
+.workspace-entry {
+    padding: 0 2px 0 2px;
+}
+
+.workspaces-widget {
+    color: #313244;
+
+    .current {
+        color: $mauve;
+        animation: fade 0.2s linear forwards;
+    }
+}
+
+.window-title-widget {
+    border-color: #f5c2e7;
+}
+
+.workspaces {
+    border-color: $mauve;
+}
+
+.time {
+    border-color: $red;
+}
+
+.battery {
+    border-color: $peach;
+}
+
+.volume {
+    border-color: $green;
+}
+
+.network {
+    border-color: $sapphire
+}
+
+/*@keyframes fadein {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}*/
+
+@keyframes fade {
+    0% {
+        color: #313244
+    }
+    100% {
+        color: $mauve
+    }
+}
+
+calendar {
+    background: #0C0F12;
+    padding: 2px 5px;
+  
+    &.view {
+      background-color: #0C0F12;
+    }
+  
+    &.button {
+      background: #101317;
+      border-radius: 50%;
+      color: #3D464E;
+  
+      &:hover {
+        color: #71C0BA;
+      }
+  
+      &:disabled {
+        color: #12161B;
+      }
+    }
+  
+    &.header {
+      background-color: #101317;
+      border-radius: 0 0 0.3em 0.3em;
+    }
+  
+    &.highlight {
+      color: #3D464E;
+    }
+  
+    &:selected {
+      color: #3D464E;
+      background: #7BB0DF;
+      border-radius: 0.2em;
+    }
+  
+    &:indeterminate {
+      color: #24292E;
+   
+   }
+  
