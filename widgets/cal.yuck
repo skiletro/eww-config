@@ -5,7 +5,7 @@
   :exclusive false
   :stacking "overlay"
   :geometry (geometry :anchor "top right" :x 10 :y 10 :width "20%" :height "25%")
-  (calendar
+  (calendar :class "widget_cal"
     :tooltip "${date.d}-${date.m}-${date.y}"
     :day {date.d}
     :month {date.m}

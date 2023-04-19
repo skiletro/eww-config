@@ -6,10 +6,10 @@
                       :width "99%"
                       :height "10px"
                       :anchor "top center")
-  (centerbox :class "bar"
+  (centerbox :class "widget_bar"
     (box :space-evenly false :halign "start" :class "left"
       (window_title))
-    (box :space-evenly false :halign "middle" :class "center"
+    (box :space-evenly false :halign "center" :class "center"
       (workspaces))
     (box :space-evenly false :halign "end" :class "right"
       ;(systray)
@@ -42,9 +42,10 @@
       (label :text "${get_time}"))))
 
 (defpoll get_battery :interval "30s" "bash ~/.config/eww/scripts/display-battery")
+(defpoll get_batterytimeleft :interval "5m" "bash ~/.config/eww/scripts/battery-life")
 (defwidget battery []
   (box :class "battery"
-    (label :text "${get_battery}")))
+    (label :text "${get_battery}" :tooltip "${get_batterytimeleft}")))
 
 (defpoll get_volume :interval "1s" "bash ~/.config/eww/scripts/display-volume")
 (defwidget volume []
