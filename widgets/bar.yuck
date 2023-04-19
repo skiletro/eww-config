@@ -22,9 +22,7 @@
 (deflisten window :initial "..." "bash ~/.config/eww/scripts/get-window-title")
 (defwidget window_title []
   (box :class "window_title" :halign "start" :visible "${window != "" ? "true" : "false"}" ;hides if there is no title
-    (label :text "${window}")
-  )
-)
+    (label :text "${window}")))
 
 (deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
 (deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
