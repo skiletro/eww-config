@@ -1,1 +1,2 @@
 (include "./widgets/bar.yuck")
+(include "./widgets/cal.yuck")

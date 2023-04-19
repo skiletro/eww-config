@@ -16,7 +16,11 @@ $sapphire: #74c7ec;
     font-family: "Iosevka";
     font-family: "Iosevka Eris";
     font-size: 12.9px;
-}  
+}
+
+eventbox {
+    color: red;
+}
 
 window {
     color: $foreground;
@@ -28,7 +32,9 @@ tooltip {
     color: #24292E;
 }
 
-.section {
+.left > *,
+.center > *,
+.right > * {
     padding: 3px 10px 3px 10px;
     /*temp*/
     margin: $gap 0 0 0;
@@ -41,45 +47,43 @@ tooltip {
     border-color: $bgdarker;
 }
 
-.sidestuff-widget > * {
-    margin-left: $gap;
-}
-
-.workspace-entry {
-    padding: 0 2px 0 2px;
-}
-
-.workspaces-widget {
-    color: #313244;
-
-    .current {
-        color: $mauve;
-        animation: fade 0.2s linear forwards;
-    }
-}
-
-.window-title-widget {
+.left > * {
+    margin-right: $gap;
     border-color: #f5c2e7;
 }
 
-.workspaces {
-    border-color: $mauve;
+.center > * {
+    margin-left: $gap;
+    margin-right: $gap;
 }
 
-.time {
-    border-color: $red;
+.right > * {
+    margin-left: $gap;
 }
 
-.battery {
-    border-color: $peach;
+@each $name, $color in (
+    workspaces: $mauve,
+    time: $red,
+    battery: $peach,
+    volume: $green,
+    network: $sapphire
+) {
+    .right .#{$name} {
+        border-color: $color;
+    }
 }
 
-.volume {
-    border-color: $green;
+.workspace-entry {
 }
 
-.network {
-    border-color: $sapphire
+
+.inactive {
+    color: #313244;
+}
+
+.active {
+    color: $mauve;
+    animation: fade 0.2s linear forwards;
 }
 
 /*@keyframes fadein {
@@ -97,15 +101,18 @@ tooltip {
 }
 
 calendar {
-    background: #0C0F12;
+    background: $background;
     padding: 2px 5px;
   
     &.view {
-      background-color: #0C0F12;
+      background-color: $background;
+      border-radius: $radius;
+      border-style: solid;
+      border-width: 2;
+      border-color: $bgdarker;
     }
   
     &.button {
-      background: #101317;
       border-radius: 50%;
       color: #3D464E;
   
@@ -119,22 +126,20 @@ calendar {
     }
   
     &.header {
-      background-color: #101317;
       border-radius: 0 0 0.3em 0.3em;
     }
   
     &.highlight {
-      color: #3D464E;
+      color: $foreground;
     }
   
     &:selected {
-      color: #3D464E;
-      background: #7BB0DF;
+      color: $foreground;
+      background: $mauve;
       border-radius: 0.2em;
     }
   
     &:indeterminate {
-      color: #24292E;
-   
-   }
-  
+      color: #3c3e47;
+    }
+}

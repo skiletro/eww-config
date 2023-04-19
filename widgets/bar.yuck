@@ -1,97 +1,65 @@
 (defwindow bar
-    :monitor 0
-    :exclusive true
-    :geometry (geometry :x "0%"
-                        :y "0%"
-                        :width "99%"
-                        :height "10px"
-                        :anchor "top center")
-    (centerbox :class "modules" :orientation "h"
-      (window_title)
-      (workspaces)
-      (box :orientation "h" :space-evenly false :halign "end" :class "sidestuff-widget"
-        ;(systray)
-        (music)
-        (network)
-        (volume)
-        (battery)
-        (time)
-      )
-    )
+  :monitor 0
+  :exclusive true
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "99%"
+                      :height "10px"
+                      :anchor "top center")
+  (centerbox :class "bar"
+    (box :space-evenly false :halign "start" :class "left"
+      (window_title))
+    (box :space-evenly false :halign "middle" :class "center"
+      (workspaces))
+    (box :space-evenly false :halign "end" :class "right"
+      ;(systray)
+      (music)
+      (network)
+      (volume)
+      (battery)
+      (time))))
+
+(deflisten window :initial "..." "bash ~/.config/eww/scripts/get-window-title")
+(defwidget window_title []
+  (box :class "window_title" :halign "start" :visible "${window != "" ? "true" : "false"}" ;hides if there is no title
+    (label :text "${window}")
   )
-  
-  (deflisten window :initial "..." "bash ~/.config/eww/scripts/get-window-title")
-  (defwidget window_title []
-    (box :halign "start" :class "section window-title-widget" :visible "${window != "" ? "true" : "false"}" ;hides if there is no title
-      (label :text "${window}")
-    )
-  )
-  
-  (deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
-  (deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
-  (defwidget workspaces []
-    (eventbox :onscroll "bash ~/.config/eww/scripts/change-active-workspace {} ${current_workspace}" :class "workspaces-widget"
-      (box :space-evenly true :class "section workspaces"
-        (label :text "${workspaces}${current_workspace}" :visible false)
-        (for workspace in workspaces
-          (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
-            (box :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
-              ;(label :text "${workspace.id}")
-              (label :text "󰝥")
-            )
-          )
-        )
-      )
-    )
-  )
-  
-  (defpoll get_time :interval "10s" "date '+%I:%M%p - %b %d, %Y'")
-  (defwidget time []
-    (box :class "section time"
-      (label :text "${get_time}")
-    )
-  )
-  
-  (defpoll get_battery :interval "30s" "bash ~/.config/eww/scripts/display-battery")
-  (defwidget battery []
-    (box :class "section battery"
-      (label :text "${get_battery}")
-    )
-  )
-  
-  (defpoll get_volume :interval "1s" "bash ~/.config/eww/scripts/display-volume")
-  (defwidget volume []
-    (box :class "section volume"
-      (label :text "${get_volume}")
-    )
-  )
-  
-  (defpoll get_ssid :interval "30s" "iwgetid -r")
-  (defwidget network []
-    (box :class "section network"
-      ;(label :text "${round(EWW_NET.enp4s0f3u1u1c2.NET_UP / 1000000, 2)}/${round(EWW_NET.enp4s0f3u1u1c2.NET_DOWN / 1000000, 2)}")
-      (label :text "${get_ssid} 󰀂")
-    )
-  )
-  
-  (defpoll get_music :interval "5s" "bash ~/.config/eww/scripts/display-music")
-  (defwidget music []
-    (box :class "section music" :visible "${get_music != "" ? "true" : "false"}"
-      (label :text "${get_music}")
-    )
-  )
-  
-  (defpoll date :interval "100s" :initial `{"d":"1","m":"1","y":"0"}`
-    `date '+{"d":"%d","m":"%m","y":"%Y"}'`)
-  (defwindow cal
-    :monitor 0
-    :exclusive false
-    :stacking "overlay"
-    :geometry (geometry :anchor "top right" :x 10 :y 10 :width "20%" :height "25%")
-    (calendar
-      :tooltip "${date.d}-${date.m}-${date.y}"
-      :day {date.d}
-      :month {date.m}
-      :year {date.y}
-    )
-  )
+)
+
+(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/get-workspaces")
+(deflisten current_workspace :initial "1" "bash ~/.config/eww/scripts/get-active-workspace")
+(defwidget workspaces []
+  (box :space-evenly true :class "workspaces"
+    (label :text "${workspaces}${current_workspace}" :visible false)
+    (for workspace in workspaces
+      (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}"
+        (box :class "${workspace.id == current_workspace ? "active" : "inactive"}" :style "padding: 0 2px 0 2px" 
+          ;(label :text "${workspace.id}")
+          (label :text "󰝥"))))))
+
+(defpoll get_time :interval "10s" "date '+%I:%M%p - %b %d, %Y'")
+(defwidget time []
+  (box :class "time"
+    (eventbox :onclick "eww open cal --toggle"
+      (label :text "${get_time}"))))
+
+(defpoll get_battery :interval "30s" "bash ~/.config/eww/scripts/display-battery")
+(defwidget battery []
+  (box :class "battery"
+    (label :text "${get_battery}")))
+
+(defpoll get_volume :interval "1s" "bash ~/.config/eww/scripts/display-volume")
+(defwidget volume []
+  (box :class "volume"
+    (label :text "${get_volume}")))
+
+(defpoll get_ssid :interval "30s" "iwgetid -r")
+(defwidget network []
+  (box :class "network"
+    ;(label :text "${round(EWW_NET.enp4s0f3u1u1c2.NET_UP / 1000000, 2)}/${round(EWW_NET.enp4s0f3u1u1c2.NET_DOWN / 1000000, 2)}")
+    (label :text "${get_ssid} 󰀂")))
+
+(defpoll get_music :interval "5s" "bash ~/.config/eww/scripts/display-music")
+(defwidget music []
+  (box :class "music" :visible "${get_music != "" ? "true" : "false"}"
+    (label :text "${get_music}")))
