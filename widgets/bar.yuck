@@ -12,7 +12,28 @@
     (box :space-evenly false :halign "center" :class "center"
       (workspaces))
     (box :space-evenly false :halign "end" :class "right"
-      ;(systray)
+      ;(systray :class "temp")
+      (music)
+      (network)
+      (volume)
+      (battery)
+      (time))))
+
+(defwindow swaybar
+  :monitor 0
+  :exclusive true
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "99%"
+                      :height "10px"
+                      :anchor "bottom center")
+  (centerbox :class "widget_bar"
+    (box :space-evenly false :halign "start" :class "left"
+      (window_title))
+    (box :space-evenly false :halign "center" :class "center"
+      (workspaces))
+    (box :space-evenly false :halign "end" :class "right"
+      ;(systray :class "temp")
       (music)
       (network)
       (volume)
