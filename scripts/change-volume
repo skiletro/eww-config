@@ -1,0 +1,7 @@
+#!/bin/bash
+direction=$1
+if test "$direction" = "up"; then
+    sh ~/bin/volume up
+elif test "$direction" = "down"; then
+    sh ~/bin/volume down
+fi

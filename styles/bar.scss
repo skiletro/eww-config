@@ -1,10 +1,13 @@
 .widget_bar {
+    /*background-color: $background;*/
+    padding: 7px 10px 0 10px;
+
     .left > *,
     .center > *,
     .right > * {
         padding: 3px 10px 3px 10px;
         /*temp*/
-        margin: 0.5em 0 0 0;
+        margin: 0 0 0 0;
         /**/
         background-color: $background;
 
@@ -55,6 +58,14 @@
         0% { opacity: 0; }
         100% { opacity: 1; }
     }*/
+    .temp {
+      margin: 0 0 0 0;
+      padding:0 8px 0 0;
+    }
+
+    .temp > * {
+      margin-left: 8px;
+    }
 
     @keyframes fade {
         0% {
